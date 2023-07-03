@@ -1,4 +1,35 @@
-# Diploma-Thesis-Ithemal
-Efficient code execution throughput prediction using LSTM-based machine-learning
-Machine learning and neural networks have made great progress in recent years. Although scientists have made multiple studies in this field, the last few years have evolved. The main reason is the rise of the available data and computer resources. The science of machine learning uses its results in computer vision, medicine and other fields of data analysis. In this thesis, a  neural-network-based model is used to predict throughput of different basic blocks. This throughput estimation problem is a basic field of work for both researchers and programmers. 
-First of all, the basic model of this thesis, ithemal, is presented and there are given details for traditional models that were used all the previous years. Afterwards, there are analyzed aspects of neural networks, not only the commonly used networks but also those of ithemal. A modern neural network, called Transformer, is presented as an alternative version to predict the throughput of basic blocks. The dataset that was used to train and evaluate each model is the next issue analyzed. Finally, the main model is presented with the experiments made to evaluate the extracted results. Concluding, we summarize the research findings and propose future studies.
+
+# Build Instructions
+
+* Make sure LIBRAY_PATH is prepended to point to the SQLite lib folder and CPATH is prepended to point to the SQLite include folder.
+* mkdir build; cd build
+* cmake -DDynamoRIO_DIR=/path/to/dynamorio/cmake/folder ..
+* make
+
+# Running Instructions
+
+## sample invocation of DynamoRIO under a client
+
+* export DYNAMORIO_HOME=/path/to/dynamorio/home
+* $DYNAMORIO_HOME/build/drrun -c /path/to/client \<client_arguments\> \-\- \<binary\>
+
+## static DR client
+
+This is used for collecting textual (Intel or AT&T or both) and tokenized representations of the basic blocks. Output can directly
+populate a SQLite database or can dump SQL files.
+
+* arguments (in order)
+  * mode - memory mapped snooping by a separate database, raw SQL file dump, SQLite
+  * Intel, AT&T and token outputs - bitwise ORed value that controls which versions are outputted
+  * inserting or updating - whether the SQL files should be dumped for inserting into an empty database or for updating an existing
+  database
+  * compiler name - what compiler was used to compile the binary
+  * compiler flags
+  * data folder - where the SQL dump should be created
+
+
+## timing DR client
+
+This client is used for timing basic blocks while running under DynamoRIO control. Due to inaccuracies in the timing
+measurements this method is not preferred and not used by Ithemal.
+   
